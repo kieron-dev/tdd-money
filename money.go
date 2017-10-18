@@ -6,6 +6,7 @@ type Money struct {
 }
 
 type Expression interface {
+	Reduce(bank Bank, currency string) Money
 }
 
 func NewDollar(amount int) Money {
@@ -22,4 +23,8 @@ func (d Money) Times(multiplier int) Money {
 
 func (d Money) Plus(addend Money) Sum {
 	return Sum{augend: d, addend: addend}
+}
+
+func (d Money) Reduce(bank Bank, currency string) Money {
+	return d
 }

@@ -6,9 +6,16 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+var (
+	fiveBucks money.Money
+)
+
 var _ = Describe("Money", func() {
+	BeforeEach(func() {
+		fiveBucks = money.NewDollar(5)
+	})
+
 	It("can be multiplied by a number", func() {
-		fiveBucks := money.NewDollar(5)
 		product := fiveBucks.Times(2)
 		Expect(product).To(Equal(money.NewDollar(10)))
 
@@ -24,7 +31,6 @@ var _ = Describe("Money", func() {
 	})
 
 	It("can be added to another money", func() {
-		fiveBucks := money.NewDollar(5)
 		sum := fiveBucks.Plus(fiveBucks)
 		bank := money.Bank{}
 		reduced := bank.Reduce(sum, "USD")
@@ -32,8 +38,13 @@ var _ = Describe("Money", func() {
 	})
 
 	It("returns a Sum when added", func() {
-		fiveBucks := money.NewDollar(5)
 		sum := fiveBucks.Plus(fiveBucks)
 		Expect(sum).To(BeAssignableToTypeOf(money.Sum{}))
+	})
+
+	It("reduces to a Money", func() {
+		bank := money.Bank{}
+		reduced := bank.Reduce(fiveBucks, "USD")
+		Expect(reduced).To(Equal(fiveBucks))
 	})
 })
