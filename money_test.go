@@ -64,6 +64,21 @@ var _ = Describe("Money", func() {
 		reduced := bank.Reduce(sum, "USD")
 		Expect(reduced).To(Equal(tenBucks))
 	})
+
+	It("can add Money to a sum", func() {
+		sum := fiveBucks.Plus(fiveBucks)
+		doubleSum := sum.Plus(fiveBucks)
+		reduced := bank.Reduce(doubleSum, "USD")
+		Expect(reduced).To(Equal(money.NewDollar(15)))
+	})
+
+	It("can add a sum to a sum", func() {
+		sum1 := fiveBucks.Plus(fiveBucks)
+		sum2 := fiveBucks.Plus(tenBucks)
+		sum3 := sum1.Plus(sum2)
+		reduced := bank.Reduce(sum3, "USD")
+		Expect(reduced).To(Equal(money.NewDollar(25)))
+	})
 })
 
 var _ = Describe("Bank", func() {

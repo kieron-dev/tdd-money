@@ -1,8 +1,12 @@
 package money
 
 type Sum struct {
-	augend Money
-	addend Money
+	augend Expression
+	addend Expression
+}
+
+func (s Sum) Plus(expr Expression) Expression {
+	return Sum{augend: s, addend: expr}
 }
 
 func (s Sum) Reduce(bank Bank, currency string) Money {
