@@ -32,7 +32,7 @@ var _ = Describe("Money", func() {
 
 	It("can be added to another money", func() {
 		sum := fiveBucks.Plus(fiveBucks)
-		bank := money.Bank{}
+		bank := money.NewBank()
 		reduced := bank.Reduce(sum, "USD")
 		Expect(reduced).To(Equal(money.NewDollar(10)))
 	})
@@ -43,8 +43,36 @@ var _ = Describe("Money", func() {
 	})
 
 	It("reduces to a Money", func() {
-		bank := money.Bank{}
+		bank := money.NewBank()
 		reduced := bank.Reduce(fiveBucks, "USD")
 		Expect(reduced).To(Equal(fiveBucks))
+	})
+
+	It("reduces to a different currency using exchange rate", func() {
+		bank := money.NewBank()
+		bank.AddRate("CHF", "USD", 2)
+		tenFrancs := money.NewFranc(10)
+		reduced := bank.Reduce(tenFrancs, "USD")
+		Expect(reduced).To(Equal(fiveBucks))
+	})
+})
+
+var _ = Describe("Bank", func() {
+	It("length 2 string arrays with same vals are the same", func() {
+		val1 := [2]string{"asdf", "foo"}
+		val2 := [2]string{"asdf", "foo"}
+		Expect(val1).To(Equal(val2))
+	})
+
+	It("can retrieve a rate", func() {
+		bank := money.NewBank()
+		bank.AddRate("CHF", "USD", 2)
+		rate := bank.Rate("CHF", "USD")
+		Expect(rate).To(Equal(2))
+	})
+
+	It("gives 1 for a same currency rate", func() {
+		bank := money.NewBank()
+		Expect(bank.Rate("ABC", "ABC")).To(Equal(1))
 	})
 })

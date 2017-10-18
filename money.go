@@ -26,5 +26,6 @@ func (d Money) Plus(addend Money) Sum {
 }
 
 func (d Money) Reduce(bank Bank, currency string) Money {
-	return d
+	rate := bank.Rate(d.currency, currency)
+	return Money{currency: currency, amount: d.amount / rate}
 }
