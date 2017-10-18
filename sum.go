@@ -6,8 +6,10 @@ type Sum struct {
 }
 
 func (s Sum) Reduce(bank Bank, currency string) Money {
+	augend := bank.Reduce(s.augend, currency)
+	addend := bank.Reduce(s.addend, currency)
 	return Money{
-		currency: s.augend.currency,
-		amount:   s.augend.amount + s.addend.amount,
+		currency: augend.currency,
+		amount:   augend.amount + addend.amount,
 	}
 }

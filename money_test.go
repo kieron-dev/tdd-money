@@ -55,6 +55,15 @@ var _ = Describe("Money", func() {
 		reduced := bank.Reduce(tenFrancs, "USD")
 		Expect(reduced).To(Equal(fiveBucks))
 	})
+
+	It("can add two currencies and reduce using rate", func() {
+		bank := money.NewBank()
+		bank.AddRate("CHF", "USD", 2)
+		tenFrancs := money.NewFranc(10)
+		sum := fiveBucks.Plus(tenFrancs)
+		reduced := bank.Reduce(sum, "USD")
+		Expect(reduced).To(Equal(money.NewDollar(10)))
+	})
 })
 
 var _ = Describe("Bank", func() {
