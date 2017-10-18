@@ -25,6 +25,9 @@ var _ = Describe("Money", func() {
 
 	It("can be added to another money", func() {
 		fiveBucks := money.NewDollar(5)
-		Expect(fiveBucks.Plus(fiveBucks)).To(Equal(money.NewDollar(10)))
+		sum := fiveBucks.Plus(fiveBucks)
+		bank := money.Bank{}
+		reduced := bank.Reduce(sum, "USD")
+		Expect(reduced).To(Equal(money.NewDollar(10)))
 	})
 })

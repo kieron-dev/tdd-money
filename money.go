@@ -5,6 +5,9 @@ type Money struct {
 	amount   int
 }
 
+type Expression interface {
+}
+
 func NewDollar(amount int) Money {
 	return Money{currency: "USD", amount: amount}
 }
