@@ -8,33 +8,38 @@ import (
 
 var (
 	fiveBucks money.Money
+	tenBucks  money.Money
+	tenFrancs money.Money
+	bank      money.Bank
 )
 
 var _ = Describe("Money", func() {
 	BeforeEach(func() {
 		fiveBucks = money.NewDollar(5)
+		tenBucks = money.NewDollar(10)
+		tenFrancs = money.NewFranc(10)
+		bank = money.NewBank()
 	})
 
 	It("can be multiplied by a number", func() {
 		product := fiveBucks.Times(2)
-		Expect(product).To(Equal(money.NewDollar(10)))
+		Expect(product).To(Equal(tenBucks))
 
 		fiveFrancs := money.NewFranc(5)
 		product = fiveFrancs.Times(2)
-		Expect(product).To(Equal(money.NewFranc(10)))
+		Expect(product).To(Equal(tenFrancs))
 	})
 
 	It("equals another Dollar with the same amount", func() {
-		Expect(money.NewDollar(5)).To(Equal(money.NewDollar(5)))
-		Expect(money.NewDollar(5)).ToNot(Equal(money.NewDollar(6)))
-		Expect(money.NewDollar(5)).ToNot(Equal(money.NewFranc(5)))
+		Expect(fiveBucks).To(Equal(money.NewDollar(5)))
+		Expect(fiveBucks).ToNot(Equal(money.NewDollar(6)))
+		Expect(fiveBucks).ToNot(Equal(money.NewFranc(5)))
 	})
 
 	It("can be added to another money", func() {
 		sum := fiveBucks.Plus(fiveBucks)
-		bank := money.NewBank()
 		reduced := bank.Reduce(sum, "USD")
-		Expect(reduced).To(Equal(money.NewDollar(10)))
+		Expect(reduced).To(Equal(tenBucks))
 	})
 
 	It("returns a Sum when added", func() {
@@ -43,26 +48,21 @@ var _ = Describe("Money", func() {
 	})
 
 	It("reduces to a Money", func() {
-		bank := money.NewBank()
 		reduced := bank.Reduce(fiveBucks, "USD")
 		Expect(reduced).To(Equal(fiveBucks))
 	})
 
 	It("reduces to a different currency using exchange rate", func() {
-		bank := money.NewBank()
 		bank.AddRate("CHF", "USD", 2)
-		tenFrancs := money.NewFranc(10)
 		reduced := bank.Reduce(tenFrancs, "USD")
 		Expect(reduced).To(Equal(fiveBucks))
 	})
 
 	It("can add two currencies and reduce using rate", func() {
-		bank := money.NewBank()
 		bank.AddRate("CHF", "USD", 2)
-		tenFrancs := money.NewFranc(10)
 		sum := fiveBucks.Plus(tenFrancs)
 		reduced := bank.Reduce(sum, "USD")
-		Expect(reduced).To(Equal(money.NewDollar(10)))
+		Expect(reduced).To(Equal(tenBucks))
 	})
 })
 
