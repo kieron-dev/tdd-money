@@ -79,6 +79,13 @@ var _ = Describe("Money", func() {
 		reduced := bank.Reduce(sum3, "USD")
 		Expect(reduced).To(Equal(money.NewDollar(25)))
 	})
+
+	It("can multiply a sum", func() {
+		sum := fiveBucks.Plus(fiveBucks)
+		prod := sum.Times(2)
+		reduced := bank.Reduce(prod, "USD")
+		Expect(reduced).To(Equal(money.NewDollar(20)))
+	})
 })
 
 var _ = Describe("Bank", func() {
