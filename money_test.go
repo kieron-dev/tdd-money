@@ -22,4 +22,9 @@ var _ = Describe("Money", func() {
 		Expect(money.NewDollar(5)).ToNot(Equal(money.NewDollar(6)))
 		Expect(money.NewDollar(5)).ToNot(Equal(money.NewFranc(5)))
 	})
+
+	It("can be added to another money", func() {
+		fiveBucks := money.NewDollar(5)
+		Expect(fiveBucks.Plus(fiveBucks)).To(Equal(money.NewDollar(10)))
+	})
 })

@@ -16,3 +16,7 @@ func NewFranc(amount int) Money {
 func (d Money) Times(multiplier int) Money {
 	return Money{currency: d.currency, amount: d.amount * multiplier}
 }
+
+func (d Money) Plus(addend Money) Money {
+	return Money{currency: d.currency, amount: d.amount + addend.amount}
+}
