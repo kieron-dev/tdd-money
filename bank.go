@@ -3,6 +3,7 @@ package money
 type Bank struct {
 }
 
-func (b Bank) Reduce(sum Expression, currency string) Money {
-	return Money{currency: "USD", amount: 10}
+func (b Bank) Reduce(expr Expression, currency string) Money {
+	sum := expr.(Sum)
+	return sum.Reduce(b, currency)
 }

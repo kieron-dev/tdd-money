@@ -30,4 +30,10 @@ var _ = Describe("Money", func() {
 		reduced := bank.Reduce(sum, "USD")
 		Expect(reduced).To(Equal(money.NewDollar(10)))
 	})
+
+	It("returns a Sum when added", func() {
+		fiveBucks := money.NewDollar(5)
+		sum := fiveBucks.Plus(fiveBucks)
+		Expect(sum).To(BeAssignableToTypeOf(money.Sum{}))
+	})
 })
