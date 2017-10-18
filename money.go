@@ -1,25 +1,18 @@
 package money
 
-type Dollar struct {
-	amount int
+type Money struct {
+	currency string
+	amount   int
 }
 
-type Franc struct {
-	amount int
+func NewDollar(amount int) Money {
+	return Money{currency: "USD", amount: amount}
 }
 
-func NewDollar(amount int) Dollar {
-	return Dollar{amount: amount}
+func NewFranc(amount int) Money {
+	return Money{currency: "CHF", amount: amount}
 }
 
-func (d Dollar) Times(multiplier int) Dollar {
-	return Dollar{amount: d.amount * multiplier}
-}
-
-func NewFranc(amount int) Franc {
-	return Franc{amount: amount}
-}
-
-func (f Franc) Times(multiplier int) Franc {
-	return Franc{amount: f.amount * multiplier}
+func (d Money) Times(multiplier int) Money {
+	return Money{currency: d.currency, amount: d.amount * multiplier}
 }
