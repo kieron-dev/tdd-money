@@ -15,9 +15,9 @@ var (
 
 var _ = Describe("Money", func() {
 	BeforeEach(func() {
-		fiveBucks = money.NewDollar(5)
-		tenBucks = money.NewDollar(10)
-		tenFrancs = money.NewFranc(10)
+		fiveBucks = money.Dollar(5)
+		tenBucks = money.Dollar(10)
+		tenFrancs = money.Franc(10)
 		bank = money.NewBank()
 	})
 
@@ -25,15 +25,15 @@ var _ = Describe("Money", func() {
 		product := fiveBucks.Times(2)
 		Expect(product).To(Equal(tenBucks))
 
-		fiveFrancs := money.NewFranc(5)
+		fiveFrancs := money.Franc(5)
 		product = fiveFrancs.Times(2)
 		Expect(product).To(Equal(tenFrancs))
 	})
 
 	It("equals another Dollar with the same amount", func() {
-		Expect(fiveBucks).To(Equal(money.NewDollar(5)))
-		Expect(fiveBucks).ToNot(Equal(money.NewDollar(6)))
-		Expect(fiveBucks).ToNot(Equal(money.NewFranc(5)))
+		Expect(fiveBucks).To(Equal(money.Dollar(5)))
+		Expect(fiveBucks).ToNot(Equal(money.Dollar(6)))
+		Expect(fiveBucks).ToNot(Equal(money.Franc(5)))
 	})
 
 	It("can be added to another money", func() {
@@ -69,7 +69,7 @@ var _ = Describe("Money", func() {
 		sum := fiveBucks.Plus(fiveBucks)
 		doubleSum := sum.Plus(fiveBucks)
 		reduced := bank.Reduce(doubleSum, "USD")
-		Expect(reduced).To(Equal(money.NewDollar(15)))
+		Expect(reduced).To(Equal(money.Dollar(15)))
 	})
 
 	It("can add a sum to a sum", func() {
@@ -77,14 +77,14 @@ var _ = Describe("Money", func() {
 		sum2 := fiveBucks.Plus(tenBucks)
 		sum3 := sum1.Plus(sum2)
 		reduced := bank.Reduce(sum3, "USD")
-		Expect(reduced).To(Equal(money.NewDollar(25)))
+		Expect(reduced).To(Equal(money.Dollar(25)))
 	})
 
 	It("can multiply a sum", func() {
 		sum := fiveBucks.Plus(fiveBucks)
 		prod := sum.Times(2)
 		reduced := bank.Reduce(prod, "USD")
-		Expect(reduced).To(Equal(money.NewDollar(20)))
+		Expect(reduced).To(Equal(money.Dollar(20)))
 	})
 })
 

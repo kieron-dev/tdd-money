@@ -11,11 +11,11 @@ type Expression interface {
 	Times(mutliplier int) Expression
 }
 
-func NewDollar(amount int) Money {
+func Dollar(amount int) Money {
 	return Money{currency: "USD", amount: amount}
 }
 
-func NewFranc(amount int) Money {
+func Franc(amount int) Money {
 	return Money{currency: "CHF", amount: amount}
 }
 
