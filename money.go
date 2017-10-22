@@ -6,7 +6,7 @@ type Money struct {
 }
 
 type Expression interface {
-	Reduce(bank Bank, currency string) Money
+	Reduce(bank *Bank, currency string) Money
 	Plus(expr Expression) Expression
 	Times(mutliplier int) Expression
 }
@@ -27,7 +27,7 @@ func (d Money) Plus(addend Expression) Expression {
 	return Sum{augend: d, addend: addend}
 }
 
-func (d Money) Reduce(bank Bank, currency string) Money {
+func (d Money) Reduce(bank *Bank, currency string) Money {
 	rate := bank.Rate(d.currency, currency)
 	return Money{currency: currency, amount: d.amount / rate}
 }

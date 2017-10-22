@@ -16,7 +16,7 @@ func (s Sum) Times(multiplier int) Expression {
 	}
 }
 
-func (s Sum) Reduce(bank Bank, currency string) Money {
+func (s Sum) Reduce(bank *Bank, currency string) Money {
 	augend := bank.Reduce(s.augend, currency)
 	addend := bank.Reduce(s.addend, currency)
 	return Money{

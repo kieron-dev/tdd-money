@@ -4,13 +4,13 @@ type Bank struct {
 	rates map[[2]string]int
 }
 
-func NewBank() Bank {
+func NewBank() *Bank {
 	bank := Bank{}
 	bank.rates = make(map[[2]string]int)
-	return bank
+	return &bank
 }
 
-func (b Bank) Reduce(expr Expression, currency string) Money {
+func (b *Bank) Reduce(expr Expression, currency string) Money {
 	return expr.Reduce(b, currency)
 }
 

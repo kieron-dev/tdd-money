@@ -10,7 +10,7 @@ var (
 	fiveBucks money.Money
 	tenBucks  money.Money
 	tenFrancs money.Money
-	bank      money.Bank
+	bank      *money.Bank
 )
 
 var _ = Describe("Money", func() {
